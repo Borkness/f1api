@@ -14,8 +14,9 @@ data class Results (
     @OneToOne
     @JoinColumn(name = "driverid")
     val driver : Drivers,
-    @Column(name = "constructorid")
-    val constructorId : Int,
+    @OneToOne
+    @JoinColumn(name = "constructorid")
+    val constructor : Constructors,
     val number : Int? = null,
     val grid : Int,
     val position : Int? = null,
