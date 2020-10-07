@@ -21,4 +21,11 @@ class DriversController(private val driversRepository: DriversRepository) {
             ResponseEntity.ok(driver)
         }.orElse(ResponseEntity.notFound().build())
     }
+
+    @GetMapping("/ref/{ref}")
+    fun getDriverByDriverRef(@PathVariable(value = "ref") driverRef : String) : ResponseEntity<Drivers> {
+        return driversRepository.findByRef(driverRef).map { driver ->
+            ResponseEntity.ok(driver)
+        }.orElse(ResponseEntity.notFound().build())
+    }
 }
