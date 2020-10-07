@@ -9,8 +9,9 @@ data class Results (
     @Column(name = "resultid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Long,
-    @Column(name = "raceid")
-    val raceId : Int,
+    @OneToOne
+    @JoinColumn(name = "raceid")
+    val race : Races,
     @OneToOne
     @JoinColumn(name = "driverid")
     val driver : Drivers,
