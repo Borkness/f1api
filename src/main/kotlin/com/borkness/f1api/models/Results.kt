@@ -7,6 +7,7 @@ import javax.persistence.*
 data class Results (
     @Id
     @Column(name = "resultid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Long,
     @Column(name = "raceid")
     val raceId : Int,
