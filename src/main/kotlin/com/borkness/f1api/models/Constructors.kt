@@ -1,6 +1,7 @@
 package com.borkness.f1api.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import org.springframework.hateoas.RepresentationModel
 import javax.persistence.*
 
 @Entity
@@ -17,4 +18,4 @@ data class Constructors (
         val nationality : String? = null,
         @JsonIgnore
         val url : String
-)
+) : RepresentationModel<Constructors>()
