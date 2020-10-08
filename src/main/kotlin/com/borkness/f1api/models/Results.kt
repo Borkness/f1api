@@ -1,5 +1,7 @@
 package com.borkness.f1api.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
@@ -11,6 +13,7 @@ data class Results (
     val id : Long,
     @OneToOne
     @JoinColumn(name = "raceid")
+    @JsonIgnoreProperties("circuitId")
     val race : Races,
     @OneToOne
     @JoinColumn(name = "driverid")

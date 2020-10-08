@@ -1,5 +1,6 @@
 package com.borkness.f1api.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.Time
 import java.util.*
 import javax.persistence.*
@@ -18,5 +19,6 @@ data class Races (
         val name : String,
         val date: Date,
         val time: Time? = null,
+        @JsonIgnore
         val url : String? = null
 )
