@@ -2,6 +2,7 @@ package com.borkness.f1api.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
 
 @Entity
@@ -22,15 +23,20 @@ data class Results (
     @JoinColumn(name = "constructorid")
     val constructor : Constructors,
     val number : Int? = null,
+    @JsonProperty("startingPosition")
     val grid : Int,
+    @JsonProperty("finishingPosition")
     val position : Int? = null,
+    @JsonIgnore
     @Column(name = "positiontext")
     val positionText : String,
+    @JsonIgnore
     @Column(name = "positionorder")
     val positionOrder : Int,
     val points : Float,
     val laps : Int,
     val time : String? = null,
+    @JsonIgnore
     val milliseconds : Int? = null,
     @Column(name = "fastestlap")
     val fastestLap : Int? = null,
