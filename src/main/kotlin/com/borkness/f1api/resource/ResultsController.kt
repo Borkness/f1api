@@ -19,7 +19,7 @@ class ResultsController(private val resultsRepository: ResultsRepository) {
         val pagination : PageRequest = PageRequest.of(page, pageSize)
 
         val results : Page<Results> = resultsRepository.findAll(pagination).map { results ->
-            results.add(linkTo(methodOn(this.javaClass).getAllResults()).withSelfRel())
+            results.add(linkTo(methodOn(this.javaClass).getById(results.id)).withSelfRel())
         }
         return ResponseEntity.ok(results.content)
     }
@@ -29,6 +29,7 @@ class ResultsController(private val resultsRepository: ResultsRepository) {
         return resultsRepository.findById(resultId).map { results ->
             results.add(linkTo(methodOn(this.javaClass).getAllResults()).withRel("results"))
             results.add(linkTo(methodOn(DriversController::class.java).getDriverById(results.driver.id)).withRel("drivers"))
+            results.add(linkTo(methodOn(ConstructorsController::class.java).getById(results.constructor.id)).withRel("constructors"))
             results.add(linkTo(methodOn(this.javaClass).getById(resultId)).withSelfRel())
             ResponseEntity.ok(results)
         }.orElse(ResponseEntity.notFound().build())
