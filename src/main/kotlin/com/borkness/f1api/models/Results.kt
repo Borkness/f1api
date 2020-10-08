@@ -3,6 +3,7 @@ package com.borkness.f1api.models
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.hateoas.RepresentationModel
 import javax.persistence.*
 
 @Entity
@@ -40,7 +41,7 @@ data class Results (
     val milliseconds : Int? = null,
     @Column(name = "fastestlap")
     val fastestLap : Int? = null,
-    val rank : Int,
+    val rank : Int? = null,
     @Column(name = "fastestlaptime")
     val fastestLapTime : String? = null,
     @Column(name = "fastestlapspeed")
@@ -48,4 +49,4 @@ data class Results (
     @OneToOne
     @JoinColumn(name = "statusid")
     val status : Statuses
-)
+) : RepresentationModel<Results>()
