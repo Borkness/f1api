@@ -2,6 +2,7 @@ package com.borkness.f1api.resource
 
 import com.borkness.f1api.models.Circuits
 import com.borkness.f1api.repository.CircuitsRepository
+import com.borkness.f1api.utilities.DataWrapper
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.ResponseEntity
@@ -24,10 +25,11 @@ class CircuitsController(private val circuitsRepository: CircuitsRepository) {
     }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable("id") circuitId : Long) : ResponseEntity<Circuits> {
+    fun getById(@PathVariable("id") circuitId : Long) : ResponseEntity<DataWrapper<Circuits>> {
         return circuitsRepository.findById(circuitId).map { circuit ->
             circuit.add(linkTo(methodOn(javaClass).getById(circuit.id)).withSelfRel())
-            ResponseEntity.ok(circuit)
+            val circuitWrapper : DataWrapper<Circuits> = DataWrapper(circuit)
+            ResponseEntity.ok(circuitWrapper)
         }.orElse(ResponseEntity.notFound().build())
     }
 }

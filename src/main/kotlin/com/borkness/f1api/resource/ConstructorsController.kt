@@ -2,6 +2,7 @@ package com.borkness.f1api.resource
 
 import com.borkness.f1api.models.Constructors
 import com.borkness.f1api.repository.ConstructorsRepository
+import com.borkness.f1api.utilities.DataWrapper
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.http.ResponseEntity
@@ -23,11 +24,12 @@ class ConstructorsController (private val constructorsRepository: ConstructorsRe
     }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable("id") constructorId : Long) : ResponseEntity<Constructors> {
+    fun getById(@PathVariable("id") constructorId : Long) : ResponseEntity<DataWrapper<Constructors>> {
         return constructorsRepository.findById(constructorId).map { constructor ->
             constructor.add(linkTo(methodOn(this.javaClass).getById(constructorId)).withSelfRel())
             constructor.add(linkTo(methodOn(this.javaClass).getAll()).withRel("constructors"))
-            ResponseEntity.ok(constructor)
+            val constructorWrapper : DataWrapper<Constructors> = DataWrapper(constructor)
+            ResponseEntity.ok(constructorWrapper)
         }.orElse(ResponseEntity.notFound().build())
     }
 }

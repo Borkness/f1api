@@ -2,6 +2,7 @@ package com.borkness.f1api.resource
 
 import com.borkness.f1api.models.Drivers
 import com.borkness.f1api.repository.DriversRepository
+import com.borkness.f1api.utilities.DataWrapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -16,16 +17,18 @@ class DriversController(private val driversRepository: DriversRepository) {
     }
 
     @GetMapping("/{id}")
-    fun getDriverById(@PathVariable(value = "id") driverId : Long) : ResponseEntity<Drivers> {
+    fun getDriverById(@PathVariable(value = "id") driverId : Long) : ResponseEntity<DataWrapper<Drivers>> {
         return driversRepository.findById(driverId).map { driver ->
-            ResponseEntity.ok(driver)
+            val driverWrapper : DataWrapper<Drivers> = DataWrapper(driver)
+            ResponseEntity.ok(driverWrapper)
         }.orElse(ResponseEntity.notFound().build())
     }
 
     @GetMapping("/ref/{ref}")
-    fun getDriverByDriverRef(@PathVariable(value = "ref") driverRef : String) : ResponseEntity<Drivers> {
+    fun getDriverByDriverRef(@PathVariable(value = "ref") driverRef : String) : ResponseEntity<DataWrapper<Drivers>> {
         return driversRepository.findByRef(driverRef).map { driver ->
-            ResponseEntity.ok(driver)
+            val driverWrapper : DataWrapper<Drivers> = DataWrapper(driver)
+            ResponseEntity.ok(driverWrapper)
         }.orElse(ResponseEntity.notFound().build())
     }
 }
