@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api/v1/results")
 class ResultsController(private val resultsRepository: ResultsRepository) {
 
+    /**
+     * Get all Results
+     *
+     * Return a paginated set of all results
+     *
+     * @param page Requested page default is 0
+     * @param pageSize Page size default is 25
+     */
     @GetMapping
     fun getAllResults(@RequestParam(defaultValue = "0") page : Int = 0,
                       @RequestParam(defaultValue = "25") pageSize : Int = 25) : ResponseEntity<Page<Results>> {
@@ -25,6 +33,13 @@ class ResultsController(private val resultsRepository: ResultsRepository) {
         return ResponseEntity.ok(results)
     }
 
+    /**
+     * Get Results By Id
+     *
+     * Return a resource of results based on the passed Id
+     *
+     * @param resultId Result Id in results table
+     */
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") resultId: Long) : ResponseEntity<DataWrapper<Results>> {
         return resultsRepository.findById(resultId).map { results ->

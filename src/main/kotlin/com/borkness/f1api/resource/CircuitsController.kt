@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/v1/circuits")
 class CircuitsController(private val circuitsRepository: CircuitsRepository) {
 
+    /**
+     * Get all circuits
+     *
+     * Get a resource of all circuits
+     */
     @GetMapping
     fun getAll() : ResponseEntity<List<Circuits>> {
         val circuits = circuitsRepository.findAll().map { circuits ->
@@ -24,6 +29,13 @@ class CircuitsController(private val circuitsRepository: CircuitsRepository) {
         return ResponseEntity.ok(circuits)
     }
 
+    /**
+     * Get circuit by Id
+     *
+     * Get a resource of a specific circuit based on id
+     *
+     * @param circuitId Circuit Id in Database
+     */
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") circuitId : Long) : ResponseEntity<DataWrapper<Circuits>> {
         return circuitsRepository.findById(circuitId).map { circuit ->

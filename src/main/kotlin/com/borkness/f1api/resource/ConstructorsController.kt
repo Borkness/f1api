@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/v1/constructors")
 class ConstructorsController (private val constructorsRepository: ConstructorsRepository){
 
+    /**
+     * Get all constructors
+     *
+     * Get a list of all constructors
+     */
     @GetMapping
     fun getAll() : ResponseEntity<List<Constructors>> {
         val constructorResponse = constructorsRepository.findAll().map { constructors ->
@@ -23,6 +28,13 @@ class ConstructorsController (private val constructorsRepository: ConstructorsRe
         return ResponseEntity.ok(constructorResponse)
     }
 
+    /**
+     * Get Constructor by Id
+     *
+     * Get representation of an individual constructor based on passed Id
+     *
+     * @param constructorId Id of the constructor in database
+     */
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") constructorId : Long) : ResponseEntity<DataWrapper<Constructors>> {
         return constructorsRepository.findById(constructorId).map { constructor ->
