@@ -4,6 +4,7 @@ import com.borkness.f1api.models.Drivers
 import com.borkness.f1api.repository.DriversRepository
 import com.borkness.f1api.utilities.DataWrapper
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -29,6 +30,7 @@ class DriversController(private val driversRepository: DriversRepository) {
      * @param driverId Driver id in database
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN_USER', 'NORMAL_USER')")
     fun getDriverById(@PathVariable(value = "id") driverId : Long) : ResponseEntity<DataWrapper<Drivers>> {
         return driversRepository.findById(driverId).map { driver ->
             val driverWrapper : DataWrapper<Drivers> = DataWrapper(driver)
