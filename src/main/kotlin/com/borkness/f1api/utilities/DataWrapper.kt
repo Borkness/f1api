@@ -8,16 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * Wraps a Json Resource with a key returning a list.
  *
  * @param T the type of resource
- * @property data
+ * @property dataToWrap
  */
-class DataWrapper<T>(data : T) {
-    private var data : List<T> = emptyList()
-    init {
-        this.data = listOf(data)
-    }
-
+class DataWrapper <T>(private val dataToWrap : T){
     @JsonProperty("content")
-    fun getData() : List<T> {
-        return data
+    fun getData() : T {
+        return dataToWrap
     }
 }

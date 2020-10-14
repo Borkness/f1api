@@ -47,8 +47,9 @@ class DriversController(private val driversRepository: DriversRepository) {
      * @param driverId Driver id in database
      */
     @GetMapping("/{id}/results")
-    fun getDriverResultsById(@PathVariable(value = "id") driverId: Long) : ResponseEntity<DataWrapper<ArrayList<DriverPoints>>> {
-        val pointResponse =  driversRepository.getResultsFromId(driverId)
-        return ResponseEntity.ok(DataWrapper(pointResponse))
+    fun getDriverResultsById(@PathVariable(value = "id") driverId: Long) : ResponseEntity<DataWrapper<List<DriverPoints>>> {
+        val driverPoints = driversRepository.listAllResultsFromId(driverId)
+
+        return ResponseEntity.ok(DataWrapper(driverPoints))
     }
 }

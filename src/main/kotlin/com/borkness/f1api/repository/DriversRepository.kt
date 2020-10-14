@@ -19,5 +19,5 @@ interface DriversRepository : JpaRepository<Drivers, Long> {
             "FROM `results` JOIN `races` ON `races`.`raceId` = `results`.`raceId` JOIN `constructors` " +
             "ON `constructors`.`constructorId` = `results`.`constructorId` JOIN `drivers` ON `drivers`.`driverId` = `results`.`driverId` " +
             "WHERE `drivers`.`driverId` = ? GROUP BY `drivers`.`surname`, `constructors`.`name`, `races`.`year` ORDER BY `races`.`year`;", nativeQuery = true)
-    fun getResultsFromId(id: Long) : ArrayList<DriverPoints>
+    fun listAllResultsFromId(id: Long) : List<DriverPoints>
 }
