@@ -1,5 +1,6 @@
 package com.borkness.f1api.resource
 
+import com.borkness.f1api.models.DriverPoints
 import com.borkness.f1api.models.Drivers
 import com.borkness.f1api.repository.DriversRepository
 import com.borkness.f1api.utilities.DataWrapper
@@ -36,5 +37,18 @@ class DriversController(private val driversRepository: DriversRepository) {
             val driverWrapper : DataWrapper<Drivers> = DataWrapper(driver)
             ResponseEntity.ok(driverWrapper)
         }.orElse(ResponseEntity.notFound().build())
+    }
+
+    /**
+     * Get driver points total
+     *
+     * Get a resource with a set of a specific drivers points for all seasons they competed
+     *
+     * @param driverId Driver id in database
+     */
+    @GetMapping("/{id}/results")
+    fun getDriverResultsById(@PathVariable(value = "id") driverId: Long) : ResponseEntity<DataWrapper<ArrayList<DriverPoints>>> {
+        val pointResponse =  driversRepository.getResultsFromId(driverId)
+        return ResponseEntity.ok(DataWrapper(pointResponse))
     }
 }
