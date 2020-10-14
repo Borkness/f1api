@@ -21,11 +21,14 @@ class ConstructorsController (private val constructorsRepository: ConstructorsRe
      * Get a list of all constructors
      */
     @GetMapping
-    fun getAll() : ResponseEntity<List<Constructors>> {
+    fun getAll() : ResponseEntity<DataWrapper<List<Constructors>>> {
         val constructorResponse = constructorsRepository.findAll().map { constructors ->
             constructors.add(linkTo(methodOn(this.javaClass).getById(constructors.id)).withSelfRel())
         }
-        return ResponseEntity.ok(constructorResponse)
+
+        val constructorWrapper : DataWrapper<List<Constructors>> = DataWrapper(constructorResponse)
+
+        return ResponseEntity.ok(constructorWrapper)
     }
 
     /**

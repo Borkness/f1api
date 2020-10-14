@@ -21,12 +21,14 @@ class CircuitsController(private val circuitsRepository: CircuitsRepository) {
      * Get a resource of all circuits
      */
     @GetMapping
-    fun getAll() : ResponseEntity<List<Circuits>> {
+    fun getAll() : ResponseEntity<DataWrapper<List<Circuits>>> {
         val circuits = circuitsRepository.findAll().map { circuits ->
             circuits.add(linkTo(methodOn(javaClass).getById(circuits.id)).withSelfRel())
         }
 
-        return ResponseEntity.ok(circuits)
+        val circuitsWrapper : DataWrapper<List<Circuits>> = DataWrapper(circuits)
+
+        return ResponseEntity.ok(circuitsWrapper)
     }
 
     /**

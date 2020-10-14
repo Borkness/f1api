@@ -18,9 +18,10 @@ class DriversController(private val driversRepository: DriversRepository) {
      * Get a resource of all drivers
      */
     @GetMapping
-    fun getDrivers() : ResponseEntity<MutableList<Drivers>> {
+    fun getDrivers() : ResponseEntity<DataWrapper<MutableList<Drivers>>> {
         val drivers = driversRepository.findAll()
-        return ResponseEntity.ok(drivers)
+        val driverWrapper : DataWrapper<MutableList<Drivers>> = DataWrapper(drivers)
+        return ResponseEntity.ok(driverWrapper)
     }
 
     /**
