@@ -1,7 +1,6 @@
 package com.borkness.f1api.resource
 
 import com.borkness.f1api.models.Users
-import com.borkness.f1api.repository.UserRolesRepository
 import com.borkness.f1api.repository.UsersRepository
 import com.borkness.f1api.services.UserRolesService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
